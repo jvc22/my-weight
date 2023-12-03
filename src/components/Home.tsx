@@ -47,7 +47,7 @@ export default function Home() {
     setIsLoading(true)
 
     try {
-      const res = await api.get('https://my-weight-jr.netlify.app/api/weight')
+      const res = await api.get('/api/weight')
 
       if (res.status === 200) {
         setMeasures(res.data)
