@@ -5,7 +5,7 @@
     "background_color": "#010101",
     "display": "standalone",
     "orientation": "portrait",
-    "start_url": "http://localhost:3000",
+    "start_url": "https://my-weight-jr.vercel.app/",
     "scope": "/",
     "icons": [
         {
