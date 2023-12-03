@@ -63,7 +63,7 @@ export default function RootLayout({
         <meta name="msapplication-TileImage" content="/icon-144x144.png"></meta>
         <meta name="theme-color" content="#010101" />
 
-        <link rel="manifest" href="/src/app/manifest.json" />
+        <link rel="manifest" href="/manifest.json" />
       </head>
       <body className={inter.className}>
         <WeightContextProvider>{children}</WeightContextProvider>
