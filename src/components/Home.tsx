@@ -35,6 +35,23 @@ export default function Home() {
   const [isLoading, setIsLoading] = useState(false)
 
   useEffect(() => {
+    async function getMeasures() {
+      setMeasures([])
+      setIsLoading(true)
+
+      try {
+        const res = await api.get('/api/weight')
+
+        if (res.status === 200) {
+          setMeasures(res.data.measures)
+          setWeightInfo(res.data.measures)
+          setIsLoading(false)
+        }
+      } catch (err) {
+        console.error(err)
+      }
+    }
+
     if (weightInfo.length === 0) {
       getMeasures()
     } else {
@@ -42,7 +59,7 @@ export default function Home() {
     }
   }, [])
 
-  async function getMeasures() {
+  async function resetMeasures() {
     setMeasures([])
     setIsLoading(true)
 
@@ -67,7 +84,7 @@ export default function Home() {
             <p className="flex items-center gap-2">
               History{' '}
               <RefreshCcw
-                onClick={getMeasures}
+                onClick={resetMeasures}
                 className="text-zinc-200 transition-all ease-linear active:rotate-90"
                 size={16}
               />
