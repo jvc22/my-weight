@@ -31,7 +31,7 @@ export async function GET() {
   })
 
   if (measures) {
-    return NextResponse.json({ measures }, { status: 200 })
+    return NextResponse.json(measures)
   }
 
   return NextResponse.json({ status: 404 })

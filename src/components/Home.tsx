@@ -43,8 +43,8 @@ export default function Home() {
         const res = await api.get('/api/weight')
 
         if (res.status === 200) {
-          setMeasures(res.data.measures)
-          setWeightInfo(res.data.measures)
+          setMeasures(res.data)
+          setWeightInfo(res.data)
           setIsLoading(false)
         }
       } catch (err) {
@@ -67,8 +67,8 @@ export default function Home() {
       const res = await api.get('/api/weight')
 
       if (res.status === 200) {
-        setMeasures(res.data.measures)
-        setWeightInfo(res.data.measures)
+        setMeasures(res.data)
+        setWeightInfo(res.data)
         setIsLoading(false)
       }
     } catch (err) {
