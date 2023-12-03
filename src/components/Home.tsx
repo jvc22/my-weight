@@ -51,7 +51,7 @@ export default function Home() {
 
       if (res.status === 200) {
         setMeasures(res.data.measures)
-        setWeightInfo(res.data)
+        setWeightInfo(res.data.measures)
         setIsLoading(false)
       }
     } catch (err) {
