@@ -31,7 +31,7 @@ export default function New() {
   const R = 'http://192.168.58.118:80'
   const J = 'http://192.168.76.118:80'
 
-  const baseUrl = J
+  const baseUrl = ''
 
   const { calibInfo, setCalibInfo } = useWeightContext()
 
