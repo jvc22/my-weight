@@ -18,10 +18,6 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        <meta
-          http-equiv="Content-Security-Policy"
-          content="upgrade-insecure-requests"
-        />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <link rel="icon" href="/favicon.ico" />
         <meta

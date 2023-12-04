@@ -193,6 +193,7 @@ export default function New() {
         setKnownWeight(0.0)
         setWeight(0.0)
         setCalibInfo(false)
+        setProgress(0)
       }
     } catch (err) {
       console.error(err)
