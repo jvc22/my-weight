@@ -74,6 +74,7 @@ export default function New() {
         title: 'Error',
         description: 'Communication has failed...',
       })
+      setIsLoading(false)
       console.error(err)
     }
   }
