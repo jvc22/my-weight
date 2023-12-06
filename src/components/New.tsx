@@ -132,6 +132,7 @@ export default function New() {
         setIsCalib(true)
         setCalibInfo(true)
         setIsAdded(true)
+        setProgress(100)
       }
     } catch (err) {
       setIsCalib(false)
