@@ -28,10 +28,10 @@ export default function New() {
 
   const { toast } = useToast()
 
-  const R = 'http://192.168.58.118:80'
-  const J = 'http://192.168.76.118:80'
+  const R = process.env.NEXT_PUBLIC_R_URL
+  const J = process.env.NEXT_PUBLIC_J_URL
 
-  const baseUrl = J
+  const baseUrl = R
 
   const { calibInfo, setCalibInfo, userInfo } = useWeightContext()
 
