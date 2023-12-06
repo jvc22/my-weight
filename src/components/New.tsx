@@ -223,7 +223,6 @@ export default function New() {
           <Input
             type="number"
             placeholder="Weight (kg)"
-            value={knownWeight}
             onChange={(ev) => setKnownWeight(Number(ev.target.value))}
           />
           <Button onClick={calibScale} disabled={isLoading}>
