@@ -10,6 +10,7 @@ HX711 scale;
 
 float calib = 0.0;
 float knownWeight = 0.0;
+long meanReading = 0;
 long offset = 0;
 float weight = 0.0;
 
@@ -37,26 +38,26 @@ void setup() {
 
   server.enableCORS(true);
   server.begin();
+
+  server.on("/calib", HTTP_OPTIONS, handleOptions);
+  server.on("/calib", HTTP_POST, getKnownWeight);
+
+  server.on("/calib/no-weight", noWeight);
+
+  server.on("/calib/put-weight", putWeight);
+
+  server.on("/block", blockWeight);
+
+  server.on("/reset", resetWeight);
+
+  server.on("/calib/verify", calibVerify);
 }
 
 void loop() {
   server.handleClient();
 
   if (scale.is_ready()) {
-    server.on("/calib", HTTP_OPTIONS, handleOptions);
-    server.on("/calib", HTTP_POST, getKnownWeight);
-
-    server.on("/calib/no-weight", noWeight);
-
-    server.on("/calib/put-weight", putWeight);
-
-    server.on("/block", blockWeight);
-
-    server.on("/reset", resetWeight);
-
-    server.on("/calib/verify", calibVerify);
-
-    long meanReading = scale.get_units(10) * (-1);
+    meanReading = scale.get_units(10) * (-1);
 
     if (abs(meanReading - control) > 0.005 * control) {
       control = meanReading;
@@ -71,11 +72,12 @@ void loop() {
       }
     }
 
-    Serial.println("Leitura média: " + String(meanReading) + " unidades" + " | " + "Offset: " + String(offset) + " unidades" + " | " + "Calib.: " + String(calib, 10) + " | " + "Leitura ajustada: " + String(control) + " unidades" + " | " + "Massa: " + String(weight, 3) + " kg" + " | " + "Massa travada: " + String(blockedWeight, 3) + " kg");
-    delay(100);
+    Serial.println("L. média: " + String(meanReading) + " unidades" + " | " + "Offset: " + String(offset) + " unidades" + " | " + "Calib.: " + String(calib * 1000, 5) + " × 10³" + " | " + "L. ajustada: " + String(control) + " unidades" + " | " + "Massa: " + String(weight, 3) + " kg" + " | " + "Massa travada: " + String(blockedWeight, 3) + " kg");
   } else {
     Serial.println("Erro ao ler a balança.");
   }
+
+  delay(100);
 }
 
 void handleOptions() {
