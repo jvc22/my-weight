@@ -31,7 +31,7 @@ export default function New() {
   const R = process.env.NEXT_PUBLIC_R_URL
   const J = process.env.NEXT_PUBLIC_J_URL
 
-  const baseUrl = R
+  const baseUrl = J
 
   const { calibInfo, setCalibInfo, userInfo } = useWeightContext()
 
