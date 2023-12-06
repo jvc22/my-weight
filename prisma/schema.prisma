@@ -11,10 +11,18 @@ datasource db {
   directUrl = env("NEXT_PUBLIC_DIRECT_URL")
 }
 
-model Measures {
+model AdultMeasures {
   id         String @id @default(uuid())
   weight     Float
   created_at String
 
-  @@map("measures")
+  @@map("adult")
+}
+
+model BabyMeasures {
+  id         String @id @default(uuid())
+  weight     Float
+  created_at String
+
+  @@map("baby")
 }

@@ -20,7 +20,7 @@ import { ScrollArea } from './ui/scroll-area'
 import { api } from '@/lib/axios'
 import { useEffect, useState } from 'react'
 import { useWeightContext } from '@/context/WeightContext'
-import { RefreshCcw } from 'lucide-react'
+import { RefreshCcw, Rocket, XCircle } from 'lucide-react'
 import { LineWobble } from '@uiball/loaders'
 
 type MeasureProps = {
@@ -31,7 +31,15 @@ type MeasureProps = {
 
 export default function Home() {
   const [measures, setMeasures] = useState<MeasureProps[]>([])
-  const { weightInfo, setWeightInfo } = useWeightContext()
+  const {
+    adultWeightInfo,
+    setAdultWeightInfo,
+    babyWeightInfo,
+    setBabyWeightInfo,
+    userInfo,
+    setIsProblem,
+    isProblem,
+  } = useWeightContext()
   const [isLoading, setIsLoading] = useState(false)
 
   useEffect(() => {
@@ -40,11 +48,18 @@ export default function Home() {
       setIsLoading(true)
 
       try {
-        const res = await api.get('/api/weight')
+        const res = await api.get(`/api/${userInfo}`)
 
-        if (res.status === 200) {
+        if (res.status === 200 && userInfo === 'adult') {
           setMeasures(res.data)
-          setWeightInfo(res.data)
+          setAdultWeightInfo(res.data)
+          setIsLoading(false)
+        }
+
+        if (res.status === 200 && userInfo === 'baby') {
+          setMeasures(res.data.measures)
+          setIsProblem(res.data.problem)
+          setBabyWeightInfo(res.data.measures)
           setIsLoading(false)
         }
       } catch (err) {
@@ -52,10 +67,18 @@ export default function Home() {
       }
     }
 
-    if (weightInfo.length === 0) {
+    if (
+      (userInfo === 'adult' && adultWeightInfo.length === 0) ||
+      (userInfo === 'baby' && babyWeightInfo.length === 0)
+    ) {
       getMeasures()
     } else {
-      setMeasures(weightInfo)
+      if (userInfo === 'adult') {
+        setMeasures(adultWeightInfo)
+      }
+      if (userInfo === 'baby') {
+        setMeasures(babyWeightInfo)
+      }
     }
   }, [])
 
@@ -64,11 +87,18 @@ export default function Home() {
     setIsLoading(true)
 
     try {
-      const res = await api.get('/api/weight')
+      const res = await api.get(`/api/${userInfo}`)
 
-      if (res.status === 200) {
+      if (res.status === 200 && userInfo === 'adult') {
         setMeasures(res.data)
-        setWeightInfo(res.data)
+        setAdultWeightInfo(res.data)
+        setIsLoading(false)
+      }
+
+      if (res.status === 200 && userInfo === 'baby') {
+        setMeasures(res.data.measures)
+        setIsProblem(res.data.problem)
+        setBabyWeightInfo(res.data.measures)
         setIsLoading(false)
       }
     } catch (err) {
@@ -78,6 +108,37 @@ export default function Home() {
 
   return (
     <div className="dark mb-auto space-y-8">
+      {userInfo === 'baby' &&
+        (isProblem === true ? (
+          <Card>
+            <CardHeader>
+              <CardTitle className="text-red-400">
+                <p className="flex items-center justify-between">
+                  Problem detected
+                  <XCircle />
+                </p>
+              </CardTitle>
+              <CardDescription>
+                Too much weight lost on the last days
+              </CardDescription>
+            </CardHeader>
+          </Card>
+        ) : (
+          <Card>
+            <CardHeader>
+              <CardTitle className="text-zinc-200">
+                <p className="flex items-center justify-between">
+                  <span>
+                    <span className="text-amber-500">3</span> days on this
+                    planet
+                  </span>
+
+                  <Rocket className="text-amber-500" />
+                </p>
+              </CardTitle>
+            </CardHeader>
+          </Card>
+        ))}
       <Card>
         <CardHeader>
           <CardTitle className="text-amber-500">
@@ -99,7 +160,8 @@ export default function Home() {
             </div>
           ) : (
             <p className="text-2xl font-bold text-zinc-200">
-              {measures[0]?.weight} <span className="font-medium">kg</span>
+              {measures[0]?.weight}{' '}
+              <span className="font-medium">{measures[0] && 'kg'}</span>
             </p>
           )}
         </CardContent>

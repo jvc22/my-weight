@@ -9,7 +9,7 @@ export async function POST(req: NextRequest) {
 
   const { weight } = (await req.json()) as { weight: number }
 
-  const registered = await prisma.measures.create({
+  const registered = await prisma.babyMeasures.create({
     data: {
       weight: Number(weight.toFixed(2)),
       created_at: formattedDate.toLowerCase(),
@@ -24,14 +24,30 @@ export async function POST(req: NextRequest) {
 }
 
 export async function GET() {
-  const measures = await prisma.measures.findMany({
+  const measures = await prisma.babyMeasures.findMany({
     orderBy: {
       created_at: 'desc',
     },
   })
 
   if (measures) {
-    return NextResponse.json(measures)
+    if (measures[1].weight) {
+      if (measures[1].weight - measures[0].weight > 0.1 * measures[1].weight) {
+        return NextResponse.json({ measures, problem: true })
+      }
+    }
+
+    if (measures[2].weight) {
+      if (measures[2].weight - measures[0].weight > 0.1 * measures[2].weight) {
+        return NextResponse.json({ measures, problem: true })
+      }
+    }
+
+    if (measures[3].weight) {
+      if (measures[3].weight - measures[0].weight > 0.1 * measures[3].weight) {
+        return NextResponse.json({ measures, problem: true })
+      }
+    }
   }
 
   return NextResponse.json({ status: 404 })

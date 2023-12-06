@@ -33,7 +33,7 @@ export default function New() {
 
   const baseUrl = J
 
-  const { calibInfo, setCalibInfo } = useWeightContext()
+  const { calibInfo, setCalibInfo, userInfo } = useWeightContext()
 
   useEffect(() => {
     if (calibInfo === true) {
@@ -160,7 +160,7 @@ export default function New() {
   async function registerWeight() {
     setIsLoading(true)
     try {
-      const res = await api.post(`/api/weight`, {
+      const res = await api.post(`/api/${userInfo}`, {
         weight,
       })
 

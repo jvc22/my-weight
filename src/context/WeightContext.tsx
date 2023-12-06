@@ -9,10 +9,16 @@ interface WeightInfo {
 }
 
 interface WeightContextType {
-  weightInfo: WeightInfo[]
-  setWeightInfo: React.Dispatch<React.SetStateAction<WeightInfo[]>>
+  adultWeightInfo: WeightInfo[]
+  setAdultWeightInfo: React.Dispatch<React.SetStateAction<WeightInfo[]>>
+  babyWeightInfo: WeightInfo[]
+  setBabyWeightInfo: React.Dispatch<React.SetStateAction<WeightInfo[]>>
   calibInfo: boolean
   setCalibInfo: React.Dispatch<React.SetStateAction<boolean>>
+  userInfo: string
+  setUserInfo: React.Dispatch<React.SetStateAction<string>>
+  isProblem: boolean
+  setIsProblem: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 export const WeightContext = createContext<WeightContextType | undefined>(
@@ -32,12 +38,26 @@ export function WeightContextProvider({
 }: {
   children: React.ReactNode
 }) {
-  const [weightInfo, setWeightInfo] = useState<WeightInfo[]>([])
+  const [adultWeightInfo, setAdultWeightInfo] = useState<WeightInfo[]>([])
+  const [babyWeightInfo, setBabyWeightInfo] = useState<WeightInfo[]>([])
   const [calibInfo, setCalibInfo] = useState<boolean>(false)
+  const [userInfo, setUserInfo] = useState<string>('adult')
+  const [isProblem, setIsProblem] = useState<boolean>(false)
 
   return (
     <WeightContext.Provider
-      value={{ weightInfo, setWeightInfo, calibInfo, setCalibInfo }}
+      value={{
+        adultWeightInfo,
+        setAdultWeightInfo,
+        babyWeightInfo,
+        setBabyWeightInfo,
+        calibInfo,
+        setCalibInfo,
+        userInfo,
+        setUserInfo,
+        isProblem,
+        setIsProblem,
+      }}
     >
       {children}
     </WeightContext.Provider>
