@@ -15,6 +15,7 @@ model AdultMeasures {
   id         String @id @default(uuid())
   weight     Float
   created_at String
+  real_created_at DateTime
 
   @@map("adult")
 }
@@ -23,6 +24,7 @@ model BabyMeasures {
   id         String @id @default(uuid())
   weight     Float
   created_at String
+  real_created_at DateTime
 
   @@map("baby")
 }

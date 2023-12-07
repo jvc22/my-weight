@@ -13,6 +13,7 @@ export async function POST(req: NextRequest) {
     data: {
       weight: Number(weight.toFixed(2)),
       created_at: formattedDate.toLowerCase(),
+      real_created_at: new Date(),
     },
   })
 
