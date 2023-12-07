@@ -55,6 +55,8 @@ export async function GET() {
         return NextResponse.json({ measures, problem: false })
       }
     }
+
+    return NextResponse.json({ measures, problem: false })
   }
 
   return NextResponse.json({ status: 404 })
