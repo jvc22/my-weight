@@ -27,7 +27,7 @@ export async function POST(req: NextRequest) {
 export async function GET() {
   const measures = await prisma.babyMeasures.findMany({
     orderBy: {
-      created_at: 'desc',
+      real_created_at: 'desc',
     },
   })
 
